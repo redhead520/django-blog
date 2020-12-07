@@ -1,12 +1,12 @@
 ## Django搭建博客
 ![py35](https://img.shields.io/badge/Python-3.5-red.svg) 
 ![Django2.2](https://img.shields.io/badge/Django-2.2.0-green.svg)
-[![](https://img.shields.io/badge/Powered%20by-@j_hao104-blue.svg)](http://www.spiderpy.cn/blog/)
+[![](https://img.shields.io/badge/Powered%20by-@黄少-blue.svg)](http://www.spiderpy.cn/blog/)
 
 使用Django快速搭建博客
 ### 要求
-* Python: 3.5
-* Django: 2.2.0
+* Python: 3.6
+* Django: 2.2.13
 
 ### 示例博客：<http://www.spiderpy.cn/blog>
 
@@ -22,7 +22,7 @@
 
 ### 下载
 ```
-wget https://github.com/jhao104/django-blog/archive/master.zip
+wget https://github.com/redhead520/django-blog/archive/master.zip
 or
 git clone git@github.com:jhao104/django-blog.git
 ```
@@ -65,6 +65,6 @@ http://ip:port/admin
 
 ## 历史版本
 
-* [v2.0](https://github.com/jhao104/django-blog/tree/v2.0)
+* [v2.0](https://github.com/redhead520/django-blog/tree/v2.0)
 
-* [v1.0](https://github.com/jhao104/django-blog/tree/v1.0)
+* [v1.0](https://github.com/redhead520/django-blog/tree/v1.0)

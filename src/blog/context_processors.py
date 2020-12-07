@@ -14,7 +14,7 @@ __author__ = 'JHao'
 
 import importlib
 from django_blog import blogroll
-from blog.models import Category, Article, Tag, Comment
+from blog.models import Category, Article, Tag, Comment, Links
 
 
 def sidebar(request):
@@ -30,15 +30,16 @@ def sidebar(request):
     comment = Comment.objects.all().order_by('-create_time')[0:6]
     # 评论
 
-    importlib.reload(blogroll)
+    # importlib.reload(blogroll)
     # 友链
+    _links = Links.get_links()
 
     return {
         'category_list': category_list,
         'blog_top': blog_top,
         'tag_list': tag_list,
         'comment_list': comment,
-        'blogroll': blogroll.sites
+        'links': _links
 
     }
 

@@ -5,7 +5,7 @@
 * 下载代码
 
 ```shell script
-git clone https://github.com/jhao104/django-blog.git
+git clone https://github.com/redhead520/django-blog.git
 ```
 
 * 安装依赖

@@ -2,7 +2,7 @@
 {% load custom_filter %}
 
 {% block title %}
-    <title>{{ blog.title }} - 烂笔头</title>
+    <title>{{ blog.title }} - 字节阁</title>
 {% endblock %}
 
 {% block meta %}
@@ -96,7 +96,7 @@
         </article>
 
         <!--评论表单-->
-        {% include "blog/message.html"  with source_id=blog.id %}
+        {% include "blog/message.html"  with source_id=blog.id changyan_code=changyan_code %}
 
     </div>
 

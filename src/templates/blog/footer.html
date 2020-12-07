@@ -1,9 +1,14 @@
 <footer>
     <!--底部导航-->
     <div class="foot-nav">
-        <div class="copy-right"><span>CopyRight &#169; 2015-2020 j_hao104's博客 &#160;&#160;&#160;     Design by j_hao104</span></div>
+        <div class="copy-right"><span>CopyRight &#169;{{ settings.copy_right }}&#160;&#160;All Rights Reserved </span></div>
         <div class="license bottom-nav">
-            <a href="http://www.miitbeian.gov.cn">@2017 spiderpy.cn 	蜀ICP备17012574号-1</a></span>
+            <span>
+                <a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank">&nbsp;{{ settings.beiancode }}</a>
+                {% if settings.show_gongan_code %}
+                <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode={{ gongan_code }}">&#160;&#160;|&#160;&#160;{{ settings.gongan_beiancode }}</a>
+                {% endif %}
+            </span>
         </div>
     </div>
     <div id="toTop">Back to Top</div>

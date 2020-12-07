@@ -2,9 +2,10 @@
 # Create your views here.
 
 import json
+import re
 from django.http import JsonResponse
 from django_blog.util import PageInfo
-from blog.models import Article, Comment
+from blog.models import Article, Comment, Carousels, BlogSettings
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, get_object_or_404
 
@@ -17,7 +18,19 @@ def get_page(request):
 def index(request):
     _blog_list = Article.objects.all().order_by('-date_time')[0:5]
     _blog_hot = Article.objects.all().order_by('-view')[0:6]
-    return render(request, 'blog/index.html', {"blog_list": _blog_list, "blog_hot": _blog_hot})
+    
+    _carousels = Carousels.get_carousels()
+    _blogSettings = BlogSettings.get_blog_setting()
+    gongan_code = re.findall('\d+', _blogSettings.gongan_beiancode) if _blogSettings.show_gongan_code else ''
+    return render(request, 'blog/index.html', {
+        "blog_list": _blog_list,
+        "blog_hot": _blog_hot,
+        "carousels": _carousels,
+        "settings": _blogSettings,
+        "gongan_code": gongan_code[0] if gongan_code else '',
+        "messages": _blogSettings.multi_messages.split('\n') if _blogSettings.multi_messages else []
+    
+    })
 
 
 def blog_list(request):
@@ -73,7 +86,7 @@ def archive(request):
     _blog_list = Article.objects.values("id", "title", "date_time").order_by('-date_time')
     archive_dict = {}
     for blog in _blog_list:
-        pub_month = blog.get("date_time").strftime("%Y年%m月")
+        pub_month = blog.get("date_time").strftime("%Y{}%m".format('-'))
         if pub_month in archive_dict:
             archive_dict[pub_month].append(blog)
         else:
@@ -84,7 +97,8 @@ def archive(request):
 
 
 def message(request):
-    return render(request, 'blog/message_board.html', {"source_id": "message"})
+    _blogSettings = BlogSettings.get_blog_setting()
+    return render(request, 'blog/message_board.html', {"source_id": "message", "changyan_code": _blogSettings.changyan_code})
 
 
 @csrf_exempt
@@ -119,7 +133,8 @@ def detail(request, pk):
     """
     blog = get_object_or_404(Article, pk=pk)
     blog.viewed()
-    return render(request, 'blog/detail.html', {"blog": blog})
+    _blogSettings = BlogSettings.get_blog_setting()
+    return render(request, 'blog/detail.html', {"blog": blog, "changyan_code": _blogSettings.changyan_code})
 
 
 def search(request):

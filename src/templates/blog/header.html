@@ -2,17 +2,26 @@
     <div class="top">
         <!--头像左边部分-->
         <div class="top-left">
-            <div class="logo"><a href="{% url "blog:index" %}"><img src="/static/images/h.gif" alt=""/></a></div>
+            <div class="logo">
+                <a href="{% url "blog:index" %}"><img src="/static/images/h.gif" alt=""/></a>
+
+            </div>
+            <div class="site-name">
+                <span>{{ settings.name }}</span>
+            </div>
 
             <!--滚动消息-->
-            <div class="web-xiaoxi">
-                <i class="el-speaker"></i>
-                <ul class="mulitline">
-                    <li>烂笔头 - j_hao104的博客</li>
-                    <li>现已开放源码下载</li>
-                    <li>喜欢的可以在github follow我</li>
-                </ul>
-            </div>
+{#            {% if messages %}#}
+{#            <div class="web-xiaoxi">#}
+{##}
+{#                <i class="el-speaker"></i>#}
+{#                <ul class="mulitline">#}
+{#                    {% for message in messages %}#}
+{#                        <li>{{ message }}</li>#}
+{#                    {% endfor %}#}
+{#                </ul>#}
+{#            </div>#}
+{#            {% endif %}#}
             <!--END 消息 -->
 
             <!--手机菜单按钮-->
@@ -36,6 +45,17 @@
                 <li><a href="{% url "blog:archive" %}">归档</a></li>
                 <li><a href="{% url "blog:message" %}">留言</a></li>
             </ul>
+            {% if messages %}
+                    <div class="web-xiaoxi">
+
+                        <i class="el-speaker"></i>
+                        <ul class="mulitline">
+                            {% for message in messages %}
+                                <li>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
         </nav>
 
         <!--这里是手机导航-->
