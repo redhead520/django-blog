@@ -43,7 +43,14 @@ def blog_list(request):
     blog_count = Article.objects.count()
     page_info = PageInfo(page_number, blog_count)
     _blog_list = Article.objects.all()[page_info.index_start: page_info.index_end]
-    return render(request, 'blog/list.html', {"blog_list": _blog_list, "page_info": page_info})
+    _blogSettings = BlogSettings.get_blog_setting()
+    gongan_code = re.findall('\d+', _blogSettings.gongan_beiancode) if _blogSettings.show_gongan_code else ''
+    return render(request, 'blog/list.html', {
+        "blog_list": _blog_list,
+        "page_info": page_info,
+        "settings": _blogSettings,
+        "gongan_code": gongan_code[0] if gongan_code else '',
+    })
 
 
 def category(request, name):
@@ -57,8 +64,15 @@ def category(request, name):
     blog_count = Article.objects.filter(category__name=name).count()
     page_info = PageInfo(page_number, blog_count)
     _blog_list = Article.objects.filter(category__name=name)[page_info.index_start: page_info.index_end]
-    return render(request, 'blog/category.html', {"blog_list": _blog_list, "page_info": page_info,
-                                                  "category": name})
+    _blogSettings = BlogSettings.get_blog_setting()
+    gongan_code = re.findall('\d+', _blogSettings.gongan_beiancode) if _blogSettings.show_gongan_code else ''
+    return render(request, 'blog/category.html', {
+        "blog_list": _blog_list,
+        "page_info": page_info,
+        "category": name,
+        "settings": _blogSettings,
+        "gongan_code": gongan_code[0] if gongan_code else '',
+    })
 
 
 def tag(request, name):
@@ -72,9 +86,15 @@ def tag(request, name):
     blog_count = Article.objects.filter(tag__tag_name=name).count()
     page_info = PageInfo(page_number, blog_count)
     _blog_list = Article.objects.filter(tag__tag_name=name)[page_info.index_start: page_info.index_end]
-    return render(request, 'blog/tag.html', {"blog_list": _blog_list,
-                                             "tag": name,
-                                             "page_info": page_info})
+    _blogSettings = BlogSettings.get_blog_setting()
+    gongan_code = re.findall('\d+', _blogSettings.gongan_beiancode) if _blogSettings.show_gongan_code else ''
+    return render(request, 'blog/tag.html', {
+        "blog_list": _blog_list,
+         "tag": name,
+         "page_info": page_info,
+        "settings": _blogSettings,
+        "gongan_code": gongan_code[0] if gongan_code else '',
+    })
 
 
 def archive(request):
@@ -93,12 +113,24 @@ def archive(request):
             archive_dict[pub_month] = [blog]
     data = sorted([{"date": _[0], "blogs": _[1]} for _ in archive_dict.items()], key=lambda item: item["date"],
                   reverse=True)
-    return render(request, 'blog/archive.html', {"data": data})
+    _blogSettings = BlogSettings.get_blog_setting()
+    gongan_code = re.findall('\d+', _blogSettings.gongan_beiancode) if _blogSettings.show_gongan_code else ''
+    return render(request, 'blog/archive.html', {
+        "data": data,
+        "settings": _blogSettings,
+        "gongan_code": gongan_code[0] if gongan_code else '',
+    })
 
 
 def message(request):
     _blogSettings = BlogSettings.get_blog_setting()
-    return render(request, 'blog/message_board.html', {"source_id": "message", "changyan_code": _blogSettings.changyan_code})
+    gongan_code = re.findall('\d+', _blogSettings.gongan_beiancode) if _blogSettings.show_gongan_code else ''
+    return render(request, 'blog/message_board.html', {
+        "source_id": "message",
+        "changyan_code": _blogSettings.changyan_code,
+        "settings": _blogSettings,
+        "gongan_code": gongan_code[0] if gongan_code else '',
+    })
 
 
 @csrf_exempt
@@ -134,7 +166,13 @@ def detail(request, pk):
     blog = get_object_or_404(Article, pk=pk)
     blog.viewed()
     _blogSettings = BlogSettings.get_blog_setting()
-    return render(request, 'blog/detail.html', {"blog": blog, "changyan_code": _blogSettings.changyan_code})
+    gongan_code = re.findall('\d+', _blogSettings.gongan_beiancode) if _blogSettings.show_gongan_code else ''
+    return render(request, 'blog/detail.html', {
+        "blog": blog,
+        "changyan_code": _blogSettings.changyan_code,
+        "settings": _blogSettings,
+        "gongan_code": gongan_code[0] if gongan_code else '',
+    })
 
 
 def search(request):
@@ -148,7 +186,15 @@ def search(request):
     blog_count = Article.objects.filter(title__icontains=key).count()
     page_info = PageInfo(page_number, blog_count)
     _blog_list = Article.objects.filter(title__icontains=key)[page_info.index_start: page_info.index_end]
-    return render(request, 'blog/search.html', {"blog_list": _blog_list, "pages": page_info, "key": key})
+    _blogSettings = BlogSettings.get_blog_setting()
+    gongan_code = re.findall('\d+', _blogSettings.gongan_beiancode) if _blogSettings.show_gongan_code else ''
+    return render(request, 'blog/search.html', {
+        "blog_list": _blog_list,
+        "pages": page_info,
+        "key": key,
+        "settings": _blogSettings,
+        "gongan_code": gongan_code[0] if gongan_code else '',
+    })
 
 
 def page_not_found_error(request, exception):

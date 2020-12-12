@@ -58,7 +58,7 @@ ROOT_URLCONF = 'django_blog.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
+        'DIRS': [os.path.join(BASE_DIR, 'templates')]   # 指定html文件所在的位置目录templates
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -113,15 +113,19 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
-LANGUAGE_CODE = 'zh-hans'
-
-TIME_ZONE = 'Asia/Shanghai'
-
+LANGUAGE_CODE = 'zh-hans'  # 修改成中文
+TIME_ZONE = 'Asia/Shanghai'  # 设置时区
 USE_I18N = True
+"""
+如果USE_L10N设置为True，则区域设置指定的格式具有更高的优先级
+admin 的时候想显示格式化时间，必须把 USE_L10N = False
+"""
+USE_L10N = False
+USE_TZ = True   # 如果是True就是取国际时间，False 是取本地时间
 
-USE_L10N = True
-
-USE_TZ = True
+# 时间格式化
+DATETIME_FORMAT = 'Y-m-d H:i:s'
+DATE_FORMAT = 'Y-m-d'
 
 
 # Static files (CSS, JavaScript, Images)
@@ -159,12 +163,34 @@ MDEDITOR_CONFIGS = {
     }
 }
 
+# 静态文件夹的别名
 STATIC_URL = '/static/'
-STATIC_ROOT = 'static'
 
+STATIC_ROOT = "static"
+
+# 所有静态文件(css/js/图片)都放在我下面你配置的文件夹中
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, '/static/'),
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
+
+# Django利用python提供的logging模块，记录日志。
+# LOGGING = {
+#   'version': 1,
+#   'disable_existing_loggers': False,
+#   'handlers': {
+#     'console': {
+#       'level': 'DEBUG',
+#       'class': 'logging.StreamHandler',
+#     },
+#   },
+#   'loggers': {
+#     'django.db.backends': {
+#       'handlers': ['console'],
+#       'propagate': True,
+#       'level': 'DEBUG',
+#     },
+#   }
+# }
