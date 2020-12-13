@@ -15,11 +15,11 @@ from django.utils.timezone import now
 from django.db import models
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
 from mdeditor.fields import MDTextField
 import logging
 logger = logging.getLogger(__name__)
 
-# Create your models here.
 
 class Tag(models.Model):
     tag_name = models.CharField('标签名称', max_length=30)
@@ -38,7 +38,7 @@ class Article(models.Model):
     date_time = models.DateField(auto_now_add=True, verbose_name='日期')  # 博客日期
     content = MDTextField(blank=True, null=True, verbose_name='正文')  # 文章正文
     digest = models.TextField(blank=True, null=True, verbose_name='摘要')  # 文章摘要
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='作者', on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='作者', on_delete=models.CASCADE, default=lambda: User.objects.first().id)
     view = models.BigIntegerField(default=0, verbose_name='阅读数')  # 阅读数
     comment = models.BigIntegerField(default=0, verbose_name='评论数')  # 评论数
     picture = models.CharField(max_length=200, verbose_name='图片地址')  # 标题图片地址
@@ -101,7 +101,7 @@ class Links(models.Model):
 
     name = models.CharField('链接名称', max_length=30, unique=True)
     link = models.URLField('链接地址')
-    sequence = models.IntegerField('排序', unique=True)
+    sequence = models.IntegerField('排序', unique=True, default=lambda: Links.objects.count())
     description = models.TextField("网站描述", max_length=1000, null=False, blank=False, default='')
     is_enable = models.BooleanField(
         '是否显示', default=True, blank=False, null=False)
@@ -140,7 +140,7 @@ class Carousels(models.Model):
     name = models.CharField('标题', max_length=100)
     image = models.ImageField('图片', upload_to='carousels/', default='default/mygirl.jpg', blank=False, null=False)
     link = models.CharField('跳转地址', max_length=200)
-    sequence = models.IntegerField('排序', unique=True)
+    sequence = models.IntegerField('排序', unique=True, default=lambda: Carousels.objects.count())
     is_enable = models.BooleanField('是否启用', default=True)
     created_time = models.DateTimeField('创建时间', default=now)
     last_mod_time = models.DateTimeField('修改时间', default=now)
@@ -235,7 +235,7 @@ head.appendChild(script);
         else:
             if not BlogSettings.objects.count():
                 setting = BlogSettings()
-                setting.name = '黄少的博客'
+                setting.name = '字节阁'
                 setting.description = '黄少的博客'
                 setting.seo_description = '黄少的博客,python,odoo'
                 setting.keywords = 'Django,Python'
