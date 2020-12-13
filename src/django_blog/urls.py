@@ -26,6 +26,7 @@ urlpatterns = [
     path('blog/', include(('blog.urls', 'blog'), namespace='blog')),
     path('', views.index, name='index'),
     path('mdeditor/', include('mdeditor.urls')),
+    path('wechat/', include(('wechat_client.urls', 'wechat_client'), namespace='wechat_client')),
 
 ]
 
