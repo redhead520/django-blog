@@ -2,3 +2,6 @@ Django==2.2.13
 Markdown==3.3
 PyMySQL==0.10.1
 django-simpleui
+django-mdeditor
+wincertstore
+Pillow

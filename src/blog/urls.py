@@ -3,14 +3,14 @@
 -------------------------------------------------
    File Name：     urls.py  
    Description :  
-   Author :       JHao
+   Author :       Afa
    date：          2017/4/13
 -------------------------------------------------
    Change Activity:
                    2017/4/13: 
 -------------------------------------------------
 """
-__author__ = 'JHao'
+__author__ = 'Afa'
 
 from blog import views
 from django.urls import path

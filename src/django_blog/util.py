@@ -3,14 +3,14 @@
 -------------------------------------------------
    File Name：     util
    Description :
-   Author :        JHao
+   Author :        Afa
    date：          2020/9/30
 -------------------------------------------------
    Change Activity:
                    2020/9/30:
 -------------------------------------------------
 """
-__author__ = 'JHao'
+__author__ = 'Afa'
 
 from math import ceil
 

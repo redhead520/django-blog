@@ -35,5 +35,4 @@ gzlsd_sms/dist/*.egg
 gzlsd_sms/mns_python_sdk/dist/*.egg
 *.egg
 
-src/blog/migrations/
 src/uploads/

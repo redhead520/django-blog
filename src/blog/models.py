@@ -3,7 +3,7 @@
 -------------------------------------------------
    File Name：     models.py
    Description :
-   Author :       JHao
+   Author :       Afa
    date：          2016/11/18
 -------------------------------------------------
    Change Activity:

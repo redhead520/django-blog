@@ -3,14 +3,14 @@
 -------------------------------------------------
    File Name：     custom_filter.py  
    Description :  
-   Author :       JHao
+   Author :       Afa
    date：          2017/4/14
 -------------------------------------------------
    Change Activity:
                    2017/4/14: 
 -------------------------------------------------
 """
-__author__ = 'JHao'
+__author__ = 'Afa'
 
 import markdown
 from django import template
