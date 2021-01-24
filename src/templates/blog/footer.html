@@ -3,13 +3,19 @@
     <div class="foot-nav">
         <div class="copy-right"><span>CopyRight &#169;{{ settings.copy_right }}&#160;&#160;All Rights Reserved </span></div>
         <div class="license bottom-nav">
-            <span>
+            <span style="height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">
                 <a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank">&nbsp;{{ settings.beiancode }}</a>
                 {% if settings.show_gongan_code %}
-                <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode={{ gongan_code }}">&#160;&#160;|&#160;&#160;{{ settings.gongan_beiancode }}</a>
+                    <span>&#160;&#160;|&#160;&#160;</span>
+                <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode={{ gongan_code }}">
+                    <img src="/static/images/beian.png" style="height:18px;margin: 0px 1px 0px 0px;"/>
+                    <span>{{ settings.gongan_beiancode }}</span>
+                </a>
                 {% endif %}
             </span>
         </div>
+
+
     </div>
     <div id="toTop">Back to Top</div>
     <script>
