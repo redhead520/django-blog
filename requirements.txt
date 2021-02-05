@@ -5,3 +5,4 @@ django-simpleui
 django-mdeditor
 wincertstore
 Pillow
+psycopg2
