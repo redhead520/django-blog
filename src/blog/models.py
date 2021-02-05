@@ -32,17 +32,18 @@ class Tag(models.Model):
         verbose_name_plural = verbose_name
 
 
+def get_default_author():
+    return User.objects.first().id
+
+
 class Article(models.Model):
-    
-    def _get_default_author(self):
-        return User.objects.first().id
     
     title = models.CharField(max_length=200, verbose_name='标题')  # 博客标题
     category = models.ForeignKey('Category', verbose_name='文章类型', on_delete=models.CASCADE)
     date_time = models.DateField(auto_now_add=True, verbose_name='日期')  # 博客日期
     content = MDTextField(blank=True, null=True, verbose_name='正文')  # 文章正文
     digest = models.TextField(blank=True, null=True, verbose_name='摘要')  # 文章摘要
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='作者', on_delete=models.CASCADE, default=_get_default_author)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='作者', on_delete=models.CASCADE, default=get_default_author)
     view = models.BigIntegerField(default=0, verbose_name='阅读数')  # 阅读数
     comment = models.BigIntegerField(default=0, verbose_name='评论数')  # 评论数
     picture = models.CharField(max_length=200, verbose_name='图片地址')  # 标题图片地址
@@ -98,17 +99,18 @@ class Comment(models.Model):
     user_name = models.CharField('评论用户', max_length=25)
     url = models.CharField('链接', max_length=100)
     comment = models.CharField('评论内容', max_length=500)
-    
+
+
+def get_default_link_sequence():
+    return Links.objects.count()
+
 
 class Links(models.Model):
     """友情链接"""
     
-    def _get_default_sequence(self):
-        return Links.objects.count()
-
     name = models.CharField('链接名称', max_length=30, unique=True)
     link = models.URLField('链接地址')
-    sequence = models.IntegerField('排序', unique=True, default=_get_default_sequence)
+    sequence = models.IntegerField('排序', unique=True, default=get_default_link_sequence)
     description = models.TextField("网站描述", max_length=1000, null=False, blank=False, default='')
     is_enable = models.BooleanField(
         '是否显示', default=True, blank=False, null=False)
@@ -142,15 +144,16 @@ class Links(models.Model):
         return self.get_links()
 
 
+def get_default_carousels_sequence():
+    return Carousels.objects.count()
+
+
 class Carousels(models.Model):
     """首页轮播图"""
-    def _get_default_sequence(self):
-        return Carousels.objects.count()
-    
     name = models.CharField('标题', max_length=100)
     image = models.ImageField('图片', upload_to='carousels/', default='default/mygirl.jpg', blank=False, null=False)
     link = models.CharField('跳转地址', max_length=200)
-    sequence = models.IntegerField('排序', unique=True, default=_get_default_sequence)
+    sequence = models.IntegerField('排序', unique=True, default=get_default_carousels_sequence)
     is_enable = models.BooleanField('是否启用', default=True)
     created_time = models.DateTimeField('创建时间', default=now)
     last_mod_time = models.DateTimeField('修改时间', default=now)
