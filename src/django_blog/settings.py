@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'mdeditor',
     'blog.apps.BlogConfig',
     'wechat_client.apps.WxConfig',
+    'novel.apps.NovelConfig',
 ]
 
 MIDDLEWARE = [
