@@ -36,3 +36,4 @@ gzlsd_sms/mns_python_sdk/dist/*.egg
 *.egg
 
 src/uploads/
+migrations

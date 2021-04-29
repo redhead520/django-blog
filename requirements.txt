@@ -6,3 +6,4 @@ django-mdeditor
 wincertstore
 Pillow
 psycopg2
+scrapy
