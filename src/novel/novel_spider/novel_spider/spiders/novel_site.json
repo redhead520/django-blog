@@ -51,7 +51,7 @@
       "category": {},
       "size": [1,2,3,4,5],
       "vip": [0,1,4],
-      "progress": [0,1],
+      "progress": [0,1]
     },
     "booklist_target_select": ".all-book-list .book-img-text ul.all-img-list>li",
     "booklist_item_select": {

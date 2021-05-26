@@ -1,0 +1,41 @@
+{
+    "site_name": "起点",
+    "init_url": "https://www.qidian.com/all",
+    "start_url": "https://www.qidian.com/all?chanId={categoryid}&subCateId={childcategoryid}&size={size}&orderId=&page={page}&vip={vip}&sign={sign}&style=1&pageSize=20&siteid=1&pubflag=0&hiddenField=0",
+    "category_select": ".select-list .sub-type a",
+    "url_param": {
+      "category": {},
+      "size": [1,2,3,4,5],
+      "page": [1,2,3,4,5],
+      "vip": [1,0],
+      "action": [0,1],
+      "sign": [1,2],
+      "update": [1,2,3,4]
+    },
+    "booklist_target_select": ".all-book-list .book-img-text ul.all-img-list>li",
+    "booklist_item_select": {
+      "novel_url": "div.book-img-box>a",
+      "novel_name": "div.book-mid-info>h4",
+      "novel_author": "div.book-mid-info>p.author>a.name",
+      "novel_author_home_url": "div.book-mid-info>p.author>a.name",
+      "novel_type": "div.book-mid-info > p.author > a:nth-child(4)",
+      "novel_cover": "div.book-img-box img",
+      "novel_abstract": "div.book-mid-info p.intro"
+    },
+    "category": {
+      "玄幻": ["东方玄幻", "异世大陆", "王朝争霸", "高武世界", "历史神话"],
+      "奇幻": ["现代魔法", "剑与魔法", "史诗奇幻", "黑暗幻想", "另类幻想"],
+      "武侠": ["传统武侠", "武侠幻想", "国术无双", "古武未来", "武侠同人"],
+      "仙侠": ["修真文明", "幻想修仙", "现代修真", "神话修真", "古典仙侠"],
+      "都市": ["都市生活", "都市异能", "异术超能", "青春校园", "娱乐明星", "商战职场"],
+      "现实": ["社会乡土", "生活时尚", "文学艺术", "成功励志", "青春文学", "爱情婚姻", "现实百态"],
+      "军事": ["军旅生涯", "军事战争", "战争幻想", "抗战烽火", "谍战特工"],
+      "历史": ["架空历史", "秦汉三国", "上古先秦", "历史传记", "两晋隋唐", "五代十国", "两宋元明", "清史民国", "外国历史", "民间传说"],
+      "游戏": ["电子竞技", "虚拟网游", "游戏异界", "游戏系统", "游戏主播"],
+      "体育": ["篮球运动", "体育赛事", "足球运动"],
+      "科幻": ["古武机甲未", "来世界", "星际文明", "超级科技", "时空穿梭", "进化变异", "末世危机"],
+      "悬疑": ["诡秘悬疑", "奇妙世界", "侦探推理", "探险生存", "古今传奇"],
+      "轻小说": ["原生幻想", "恋爱日常", "衍生同人", "搞笑吐槽"],
+      "短篇": ["诗歌散文", "人物传记", "影视剧本", "评论文集", "生活随笔", "美文游记", "短篇小说"]
+    }
+}
