@@ -1,6 +1,8 @@
 import scrapy
 import os
 import json
+import re
+from pprint import pprint
 
 ROOT_DIR = os.path.dirname(__file__)
 SETTING_PATH = os.path.join(ROOT_DIR, 'conf', 'qidian.json')
@@ -68,27 +70,74 @@ class CategorySpider(scrapy.Spider):
 
 class GetAllNovelSpider(scrapy.Spider):
     name = 'qidian_all_novel'
-    allowed_domains = ['https://www.qidian.com']
-    start_urls = []
+    allowed_domains = ['www.qidian.com']
+    start_urls = ["https://www.qidian.com/all?chanId=20076&subCateId=20078&size=3&action=1&orderId=&page=2&vip=1&sign=1&style=1&pageSize=20&siteid=1&pubflag=0&hiddenField=0"]
 
     def __init__(self, name=None, **kwargs):
         super(GetAllNovelSpider, self).__init__(name=name, **kwargs)
         self.web_settings = json.load(open(SETTING_PATH, 'r'))
+        self.cate_mapping = {c['cate_param']: c for c in self.web_settings['category_param']}
+        self.count = 0
         self.init_start_urls()
 
     def init_start_urls(self):
         for cate_param in self.web_settings['category_param']:
-            for key, values in self.web_settings['url_param'].items():
-                for value in values:
-                    _url = ''
-                   self.start_urls.append(_url)
+            for size in self.web_settings['url_param']['size']:
+                for vip in self.web_settings['url_param']['vip']:
+                    for action in self.web_settings['url_param']['action']:
+                        for sign in self.web_settings['url_param']['sign']:
+                            for update in self.web_settings['url_param']['update']:
+                                for page in self.web_settings['url_param']['page']:
+                                    _url = self.web_settings['start_url'].format(
+                                        cate_param=cate_param['cate_param'],
+                                        size=size,
+                                        vip=vip,
+                                        action=action,
+                                        sign=sign,
+                                        update=update,
+                                        page=page
+                                    )
+                                    if self.count == 0:
+                                        self.start_urls.append(_url)
+                                    self.count += 1
+                                    # print(self.count)
 
     def parse(self, response):
-        print(web_settings)
+        cate_param = re.search('(chanId=\d+&subCateId=\d+)', response.url).group()
+        cate = self.cate_mapping[cate_param]
+        print(response.url)
+        if response.css("div.no-data"):
+            print(response.css("div.no-data>h3::text").extract_first())  # 没有找到符合条件的书
+            yield
+        for novel in response.css("div.all-book-list .book-img-text ul.all-img-list>li"):
+            name = novel.css("div.book-mid-info>h4>a::text").extract_first()
+            novel_url = novel.css("div.book-img-box>a::attr(href)").extract_first()
+            novel_author = novel.css("div.book-mid-info>p.author>a.name::text").extract_first()
+            novel_author_home_url = novel.css("div.book-mid-info>p.author>a.name::attr(href)").extract_first()
+            novel_type = novel.css("div.book-mid-info > p.author > a:nth-child(4)::text").extract_first()
+            novel_cover = novel.css("div.book-img-box img::attr(src)").extract_first()
+            novel_abstract = novel.css("div.book-mid-info p.intro::text").extract_first()
+            # novel_size = novel.css("div.book-mid-info p.update>span>span::text").extract_first()
+            novel_item = {
+                "name": name,
+                "novel_url": 'https:' + novel_url if novel_url.startswith('//book.qidian') else novel_url,
+                "novel_author": novel_author,
+                # "novel_size": novel_size,
+                "novel_author_home_url": 'https:' + novel_author_home_url if novel_author_home_url.startswith('//my.qidian') else novel_author_home_url,
+                "novel_type": novel_type,
+                "novel_cover": 'https:' + novel_cover if novel_cover.startswith('//bookcover') else novel_cover,
+                "novel_abstract": novel_abstract.replace('\r', '').strip(),
+                "novel_cate": cate['cate_name'],
+                "tag": cate['tag'],
+            }
+            pprint(novel_item)
+
+            yield novel_item
 
 
 if __name__ == '__main__':
-    run('get_qidian_category')
+    # run('get_qidian_category')
+    run('qidian_all_novel')
     # from scrapy.utils.project import get_project_settings
     # from scrapy.crawler import CrawlerRunner
     # from twisted.internet import reactor
